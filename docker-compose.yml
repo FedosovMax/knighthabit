@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  knight-habit:
+    restart: always
+    image: maksymfedosov/knighthabit:latest
+    ports:
+      - "6050:6050"
