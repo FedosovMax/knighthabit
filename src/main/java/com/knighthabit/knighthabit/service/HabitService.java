@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface HabitService {
 
-    Habit getHabit(Long id);
+    Habit getHabitById(Long id);
     void deleteHabit(Long id);
     List<Habit> getAllHabits();
 }

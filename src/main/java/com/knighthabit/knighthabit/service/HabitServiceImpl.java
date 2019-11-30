@@ -2,19 +2,20 @@ package com.knighthabit.knighthabit.service;
 
 import com.knighthabit.knighthabit.model.Habit;
 import com.knighthabit.knighthabit.repository.HabitRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class HabitServiceImpl implements HabitService{
 
-    @Autowired
-    HabitRepository habitRepository;
+    final HabitRepository habitRepository;
 
     @Override
-    public Habit getHabit(Long id) {
+    public Habit getHabitById(Long id) {
         return habitRepository.getOne(id);
     }
 
