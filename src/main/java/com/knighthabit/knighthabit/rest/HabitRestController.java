@@ -20,23 +20,20 @@ public class HabitRestController {
     final HabitService habitService;
     @GetMapping(value = "/{id}")
     public ResponseEntity <Habit> getHabit(@NotBlank Long habitId){
-        if (habitId == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         Habit habit = this.habitService.getHabitById(habitId);
         return new ResponseEntity<>(habit,HttpStatus.OK);
 
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "{Id}")
     public ResponseEntity <Habit> deleteHabit(@NotBlank Long habitId){
         this.habitService.deleteHabit(habitId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
-    @GetMapping(value = "}")
+    @GetMapping()
     public ResponseEntity <List<Habit>>getAllHabits(){
         List<Habit> habits = this.habitService.getAllHabits();
         return new ResponseEntity<>(habits,HttpStatus.OK);

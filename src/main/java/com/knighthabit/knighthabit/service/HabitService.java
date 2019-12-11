@@ -8,4 +8,5 @@ public interface HabitService {
     Habit getHabitById(Long id);
     void deleteHabit(Long id);
     List<Habit> getAllHabits();
+
 }
