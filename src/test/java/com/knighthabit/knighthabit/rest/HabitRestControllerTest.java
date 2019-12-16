@@ -46,11 +46,10 @@ class HabitRestControllerTest {
         habitRepository.save(habitFirst);
 
         mockMvc.perform(
-                get("/api/habits/")
-                        .content(TestUtils.convertObjectToJsonBytes(habitFirst))
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(status().isOk());
+                get("/api/habits/"+habitFirst.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
         assertThat(habitRepository.findById(habitFirst.getId()).get().getId() )
                 .isEqualTo(habitFirst.getId());
@@ -64,8 +63,8 @@ class HabitRestControllerTest {
         mockMvc.perform(
                 get("/api/habits/")
                         .content(TestUtils.convertObjectToJsonBytes(habitFirst))
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
         assertThat(habitRepository.count()).isEqualTo(1);
@@ -81,7 +80,7 @@ class HabitRestControllerTest {
                 delete("/api/habits/" + habitFirst.getId())
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         assertThat(habitRepository.count()).isEqualTo(0);
 

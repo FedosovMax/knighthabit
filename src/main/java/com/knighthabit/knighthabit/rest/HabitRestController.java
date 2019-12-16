@@ -14,23 +14,21 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/habits/")
+@RequestMapping("/api/habits")
 public class HabitRestController {
 
     final HabitService habitService;
     @GetMapping(value = "/{id}")
-    public ResponseEntity <Habit> getHabit(@NotBlank Long habitId){
+    public ResponseEntity <Habit> getHabit(@NotBlank @PathVariable Long id){
 
-        Habit habit = this.habitService.getHabitById(habitId);
-        return new ResponseEntity<>(habit,HttpStatus.OK);
-
+        Habit habit = this.habitService.getHabitById(id);
+        return new ResponseEntity<>(habit,HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping(value = "{Id}")
-    public ResponseEntity <Habit> deleteHabit(@NotBlank Long habitId){
-        this.habitService.deleteHabit(habitId);
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity <Habit> deleteHabit(@NotBlank @PathVariable Long id){
+        this.habitService.deleteHabit(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
     @GetMapping()
