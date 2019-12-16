@@ -18,11 +18,11 @@ import java.util.List;
 public class HabitRestController {
 
     final HabitService habitService;
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "{id}")
     public ResponseEntity <Habit> getHabit(@NotBlank @PathVariable Long id){
 
         Habit habit = this.habitService.getHabitById(id);
-        return new ResponseEntity<>(habit,HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(habit,HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{id}")

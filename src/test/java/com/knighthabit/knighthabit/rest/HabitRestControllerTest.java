@@ -49,7 +49,7 @@ class HabitRestControllerTest {
                 get("/api/habits/"+habitFirst.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
 
         assertThat(habitRepository.findById(habitFirst.getId()).get().getId() )
                 .isEqualTo(habitFirst.getId());
