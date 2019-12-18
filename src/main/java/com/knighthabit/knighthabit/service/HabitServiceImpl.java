@@ -1,9 +1,9 @@
 package com.knighthabit.knighthabit.service;
 
+import com.knighthabit.knighthabit.exeption.HabitNotFoundExeption;
 import com.knighthabit.knighthabit.model.Habit;
 import com.knighthabit.knighthabit.repository.HabitRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class HabitServiceImpl implements HabitService{
 
     @Override
     public Habit getHabitById(Long id) {
-        return habitRepository.getOne(id);
+        return habitRepository.findById(id).orElseThrow(HabitNotFoundExeption::new);
     }
 
     @Override

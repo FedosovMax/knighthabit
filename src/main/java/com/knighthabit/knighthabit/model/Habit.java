@@ -9,9 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name="habit")
-@Getter
-@Setter
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Habit {
