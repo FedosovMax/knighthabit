@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HabitFactory {
-    public static final Long HABIT_ID = 1L;
     public static final String HABIT_NAME = "hard working";
     public static final String HABIT_DESCRIPTION = "hard working";
     public static final Hardness HABIT_HARDNESS = Hardness.fromText("EXTRAORDINARY");
@@ -27,7 +26,6 @@ public class HabitFactory {
     public static Habit firstHabit() {
         return Habit
                 .builder()
-                .id(HABIT_ID)
                 .name(HABIT_NAME)
                 .description(HABIT_DESCRIPTION)
                 .hardness(HABIT_HARDNESS)
@@ -38,7 +36,6 @@ public class HabitFactory {
     public static Habit updateHabit() {
         return Habit
                 .builder()
-                .id(HABIT_ID)
                 .name(HABIT_NAME)
                 .description(HABIT_DESCRIPTION)
                 .hardness(HABIT_HARDNESS)

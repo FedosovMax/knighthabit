@@ -42,17 +42,16 @@ class HabitRestControllerTest {
     @Test
     void getHabit() throws Exception  {
 
-        Habit habitFirst = HabitFactory.firstHabit();
-        habitRepository.save(habitFirst);
+        Habit savedHabit = habitRepository.save(HabitFactory.firstHabit());
 
         mockMvc.perform(
-                get("/api/habits/"+habitFirst.getId())
+                get("/api/habits/"+savedHabit.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        assertThat(habitRepository.findById(habitFirst.getId()).get().getId() )
-                .isEqualTo(habitFirst.getId());
+        assertThat(habitRepository.findById(savedHabit.getId()).get().getId() )
+                .isEqualTo(savedHabit.getId());
     }
 
     @Test
