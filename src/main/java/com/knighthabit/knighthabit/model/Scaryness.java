@@ -21,9 +21,9 @@ public enum Scaryness {
     }
 
     @JsonCreator
-    public static Scaryness fromText(String text){
-        for(Scaryness s : Scaryness.values()){
-            if(s.getText().equals(text)){
+    public static Scaryness fromText(String text) {
+        for (Scaryness s : Scaryness.values()) {
+            if (s.getText().equals(text)) {
                 return s;
             }
         }

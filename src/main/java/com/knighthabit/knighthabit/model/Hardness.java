@@ -22,9 +22,9 @@ public enum Hardness {
     }
 
     @JsonCreator
-    public static Hardness fromText(String text){
-        for(Hardness s : Hardness.values()){
-            if(s.getText().equals(text)){
+    public static Hardness fromText(String text) {
+        for (Hardness s : Hardness.values()) {
+            if (s.getText().equals(text)) {
                 return s;
             }
         }

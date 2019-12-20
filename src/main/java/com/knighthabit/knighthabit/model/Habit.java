@@ -1,14 +1,22 @@
 package com.knighthabit.knighthabit.model;
 
-import javafx.scene.control.PopupControlBuilder;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
-@Table(name="habit")
+@Table(name = "habit")
 @Builder
 @Data
 @NoArgsConstructor
@@ -27,11 +35,11 @@ public class Habit {
     private String description;
 
     @Column(name = "hardness")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Hardness hardness;
 
     @Column(name = "scaryness")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Scaryness scaryness;
 
     private LocalDate starting_date;
@@ -39,12 +47,11 @@ public class Habit {
     private String successFulDates;
 
     @Column(name = "skipped_dates")
-   //private List<LocalDate> skippedDates;
+    //private List<LocalDate> skippedDates;
     private String skippedDates;
 
     @Column(name = "success_stream")
     private int successStream;
-
 
 
 }

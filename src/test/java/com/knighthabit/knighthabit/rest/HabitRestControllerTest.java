@@ -1,11 +1,11 @@
 package com.knighthabit.knighthabit.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.knighthabit.knighthabit.factories.HabitFactory;
 import com.knighthabit.knighthabit.model.Habit;
 import com.knighthabit.knighthabit.repository.HabitRepository;
 import com.knighthabit.knighthabit.service.HabitService;
 import com.knighthabit.knighthabit.utilis.TestUtils;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.IOException;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -38,19 +39,22 @@ class HabitRestControllerTest {
     @Autowired
     private HabitService habitService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     @Test
-    void getHabit() throws Exception  {
+    void getHabit() throws Exception {
 
         Habit savedHabit = habitRepository.save(HabitFactory.firstHabit());
 
         mockMvc.perform(
-                get("/api/habits/"+savedHabit.getId())
+                get("/api/habits/" + savedHabit.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        assertThat(habitRepository.findById(savedHabit.getId()).get().getId() )
+        assertThat(habitRepository.findById(savedHabit.getId()).get().getId())
                 .isEqualTo(savedHabit.getId());
     }
 
@@ -77,11 +81,38 @@ class HabitRestControllerTest {
 
         mockMvc.perform(
                 delete("/api/habits/" + habitFirst.getId())
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
         assertThat(habitRepository.count()).isEqualTo(0);
 
+    }
+
+    @Test
+    void updateHabit() throws Exception {
+
+        when(habitService.updateHabit(eq(HabitFactory.updateHabit())))
+                .thenReturn(HabitFactory.updateHabit());
+
+        mockMvc.perform(
+                put("/api/habits/edit")
+                        .content(objectMapper.writeValueAsBytes(HabitFactory.updateHabit()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists());
+    }
+
+    @Test
+    void addHabit() throws Exception {
+
+        mockMvc.perform(
+                post("/api/habits/add")
+                        .content(objectMapper.writeValueAsString(HabitFactory.firstHabit()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists());
     }
 }
