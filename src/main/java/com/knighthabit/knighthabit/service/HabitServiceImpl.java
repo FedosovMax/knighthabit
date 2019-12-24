@@ -36,8 +36,6 @@ public class HabitServiceImpl implements HabitService {
 
     @Override
     public Habit updateHabit(Habit changedHabit) {
-
-
         final Habit habit = this.habitRepository.findById(changedHabit.getId()).
                 orElseThrow(HabitNotFoundExeption::new);
 
@@ -52,5 +50,4 @@ public class HabitServiceImpl implements HabitService {
         habit.setSuccessStream(changedHabit.getSuccessStream());
         return changedHabit;
     }
-
 }

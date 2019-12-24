@@ -26,7 +26,6 @@ public class HabitRestController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Habit> getHabit(@NotBlank @PathVariable Long id) {
-
         Habit habit = this.habitService.getHabitById(id);
         return new ResponseEntity<>(habit, HttpStatus.OK);
     }
@@ -43,17 +42,14 @@ public class HabitRestController {
         return new ResponseEntity<>(habits, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "")
     public ResponseEntity<Habit> addHabit(@RequestBody Habit habit) {
-        Habit responsehabit = this.habitService.save(habit);
-        return new ResponseEntity<>(habit, HttpStatus.CREATED);
+        Habit responseHabit = this.habitService.save(habit);
+        return new ResponseEntity<>(responseHabit, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/edit")
     public ResponseEntity<Habit> editHabit(@RequestBody Habit habit) {
-
         return new ResponseEntity<>(this.habitService.updateHabit(habit), HttpStatus.OK);
-
     }
-
 }

@@ -5,7 +5,6 @@ import com.knighthabit.knighthabit.factories.HabitFactory;
 import com.knighthabit.knighthabit.model.Habit;
 import com.knighthabit.knighthabit.repository.HabitRepository;
 import com.knighthabit.knighthabit.service.HabitService;
-import com.knighthabit.knighthabit.utilis.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,6 @@ class HabitRestControllerTest {
 
     @Test
     void getHabit() throws Exception {
-
         Habit savedHabit = habitRepository.save(HabitFactory.firstHabit());
 
         mockMvc.perform(
@@ -65,13 +63,11 @@ class HabitRestControllerTest {
 
         mockMvc.perform(
                 get("/api/habits/")
-                        .content(TestUtils.convertObjectToJsonBytes(habitFirst))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
         assertThat(habitRepository.count()).isEqualTo(1);
-
     }
 
     @Test
@@ -86,18 +82,19 @@ class HabitRestControllerTest {
                 .andExpect(status().isNoContent());
 
         assertThat(habitRepository.count()).isEqualTo(0);
-
     }
 
     @Test
     void updateHabit() throws Exception {
+        Habit habitFirst = HabitFactory.firstHabit();
+        habitRepository.save(habitFirst);
 
         when(habitService.updateHabit(eq(HabitFactory.updateHabit())))
                 .thenReturn(HabitFactory.updateHabit());
 
         mockMvc.perform(
                 put("/api/habits/edit")
-                        .content(objectMapper.writeValueAsBytes(HabitFactory.updateHabit()))
+                        .content(objectMapper.writeValueAsBytes(habitFirst))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
