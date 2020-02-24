@@ -52,9 +52,5 @@ public class Habit {
 
     @Column(name = "success_stream")
     private int successStream;
-
-
 }
-
-
 

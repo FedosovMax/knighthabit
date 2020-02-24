@@ -36,10 +36,8 @@ public class HabitServiceImpl implements HabitService {
 
     @Override
     public Habit updateHabit(Habit changedHabit) {
-        final Habit habit = this.habitRepository.findById(changedHabit.getId()).
+        Habit habit = this.habitRepository.findById(changedHabit.getId()).
                 orElseThrow(HabitNotFoundExeption::new);
-
-        habit.setId(changedHabit.getId());
         habit.setName(changedHabit.getName());
         habit.setDescription(changedHabit.getDescription());
         habit.setScaryness(changedHabit.getScaryness());
@@ -48,6 +46,7 @@ public class HabitServiceImpl implements HabitService {
         habit.setSuccessFulDates(changedHabit.getSuccessFulDates());
         habit.setStarting_date(changedHabit.getStarting_date());
         habit.setSuccessStream(changedHabit.getSuccessStream());
+        this.habitRepository.save(habit);
         return changedHabit;
     }
 }

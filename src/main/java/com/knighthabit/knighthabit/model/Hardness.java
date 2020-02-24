@@ -32,5 +32,4 @@ public enum Hardness {
                 "Unknown enum type: " + text + "You can choose from: " + Arrays.toString(Hardness.values())
         );
     }
-
 }
