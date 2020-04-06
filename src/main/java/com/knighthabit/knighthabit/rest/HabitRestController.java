@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/api/habits")
 public class HabitRestController {
 
-    final HabitService habitService;
+    private final HabitService habitService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Habit> getHabit(@NotBlank @PathVariable Long id) {
@@ -31,9 +31,10 @@ public class HabitRestController {
     }
 
     @DeleteMapping(value = "{id}")
-    public ResponseEntity<Habit> deleteHabit(@NotBlank @PathVariable Long id) {
+    public ResponseEntity<Habit> deleteHabit(@PathVariable Long id) {
+        Habit habit = this.habitService.getHabitById(id);
         this.habitService.deleteHabit(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(habit, HttpStatus.OK);
     }
 
     @GetMapping()
